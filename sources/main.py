@@ -4,8 +4,8 @@ import userAPS as userAPS
 user = userAPS.UserAPS("Stiven")
 
 # Размеры окна
-window_Width = 1085
-window_Height = 800
+window_Width = 1105
+window_Height = 790
 
 # Цвета
 BG = "#222831"
@@ -19,7 +19,7 @@ def main(page: Page):
     page.title = "Anime Payment System"
     page.window_width = window_Width
     page.window_height = window_Height
-    page.bgcolor = BG
+    # page.bgcolor = BG
 
     # Счет для денег
     Cash_Account = Container (
@@ -46,14 +46,14 @@ def main(page: Page):
         )   
     )
 
-    # if len(user.cards) > 1:
-    #     currency = user.cards[1].currency
-    #     getMoney = user.cards[1].getMoney()
-    #     id = user.cards[1].ID
-    # else:
-    currency = "*"
-    getMoney = 0.00
-    id = "____ ____ ____"
+    if len(user.cards) > 1:
+        currency = user.cards[1].currency
+        getMoney = user.cards[1].getMoney()
+        id = user.cards[1].ID
+    else:
+        currency = "*"
+        getMoney = 0.00
+        id = "____ ____ ____"
 
     # Депозит
     Second_Cash_Account = Container (
@@ -133,7 +133,7 @@ def main(page: Page):
     Account_Window = Container ( 
         width = 500,
         bgcolor = BG,
-        margin = margin.only(right = 20),
+        margin = margin.only(right = 20, left = 20, top = 20),
         content = Column (
             controls = [
                 # Профиль
@@ -172,7 +172,7 @@ def main(page: Page):
                     width = 500, 
                     bgcolor = BG,
                     content = Text("Переводы / Платежи", size = 40),
-                    margin = margin.only(bottom = 22),
+                    margin = margin.only(top = 40, bottom = 22),
                 ),
                 Container(height = 2, width = 500, bgcolor = FG),
                 Button_Container
@@ -182,6 +182,8 @@ def main(page: Page):
 
     #  Главное окно
     Main_Window = Container (
+        height = 733,
+        bgcolor= BG,
         content = Row (
             controls = [
                 Account_Window,
@@ -194,13 +196,16 @@ def main(page: Page):
     def route_change(e):
         print("Route change:", e.route)
         page.views.clear()
-        page.views.append(View("/",[page.add(Main_Window)]))
+        page.views.append(View("/",[Main_Window]))
+
         if page.route == "/transfer" :
-            page.views.append(View("/transfer", [page.add(Main_Window)]))
+            page.views.append(View("/transfer", [Main_Window]))
+
         if page.route == "/transferToAccount":
-            page.views.append(
-                View("/transferToAccount", [page.add(Main_Window)]))
+            page.views.append(View("/transferToAccount", [Main_Window]))
+
         if page.route == "/pay":
+            page.bgcolor = BG
             page.views.append(View("/pay", [page.add(Main_Window)]))
         page.update()
 
