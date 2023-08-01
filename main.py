@@ -1,8 +1,11 @@
 from flet import *
+import userAPS
+
+user = userAPS.UserAPS("Stiven")
 
 # Размеры окна
-window_Width = 1200
-window_Height = 900
+window_Width = 1100
+window_Height = 800
 
 # Цвета
 BG = "#222831"
@@ -17,14 +20,24 @@ def main(page: Page):
     page.window_height = window_Height
     page.bgcolor = BG
 
+    def transfer(e):
+        pass
+
+    def transferToAccount(e):
+        pass
+    
+    def pay(e):
+        pass
+
     # Счет для денег
     Cash_Account = Container (
         width = 500,
         height = 250,
         bgcolor = FG,
         border_radius = 10,
-        margin = margin.only(top=30, bottom=30)     
+        margin = margin.only(top = 30, bottom = 30)     
     )
+    
     # Депозит
     Deposit = Container (
         width = 500,
@@ -37,27 +50,26 @@ def main(page: Page):
     # Окно с данными о счетах и профиле
     Account_Window = Container ( 
         width = 500,
-        height = 250,
         bgcolor = BG,
-        
+        margin = margin.only(right = 20),
         content = Column (
             controls = [
                 # Профиль
                 Row (
                     controls = [
-                        Container (margin = margin.only(left = 20)),
-                        CircleAvatar (
+                        Container (margin = margin.only(left = 10)),
+                        Image (
                             width = 100,
                             height = 100,
                             opacity = 0.8,
-                            foreground_image_url = 
-                                "https://avatars.mds.yandex.net/i?id=73be893fc2426401139e3e0a7f09848bcf505aa2-9181306-images-thumbs&n=13"
+                            border_radius = 50,
+                            src = user.avatarImg
                         ),
                         Container (
-                            Text("Abdusabirov Davlat", size = 30),
+                            Text(user.userName, size = 40),
                             width = 600,
                             height = 100,
-                            padding = padding.only(top = 30, left = 20), 
+                            padding = padding.only(top = 20, left = 10), 
                         )  
                     ],
                 ), 
@@ -68,20 +80,72 @@ def main(page: Page):
             ]
         )        
     )
+    
+    # Окно с кнопками
+    Button_Container = Container (
+        content = Column (
+            controls = [
+                Container (
+                    content = Text("Перевести на счет", size = 30),
+                    alignment = alignment.center,
+                    margin = margin.only(top = 30),
+                    bgcolor = FG,
+                    width = 500,
+                    height = 100,
+                    border_radius = 10,
+                    on_click = transfer
+                ),
+
+                Container (
+                    content = Text("Перевести между счетами", size = 30),
+                    alignment = alignment.center,
+                    margin = margin.only(top = 50),
+                    bgcolor = FG,
+                    width = 500,
+                    height = 100,
+                    border_radius = 10,
+                    on_click = transferToAccount
+                ),
+
+                Container (
+                    content = Text("Оплатить услуги", size = 30), 
+                    alignment = alignment.center,
+                    margin = margin.only(top = 50, bottom = 100),
+                    bgcolor = FG,
+                    width = 500,
+                    height = 100,
+                    border_radius = 10,
+                    on_click = pay
+                )
+            ]
+        )
+    )
 
     # Окно платежи/переводы
     Pay_WindoW = Container (
-
+        content = Column (
+            controls = [
+                Container (
+                    alignment = alignment.center,
+                    width = 500, 
+                    bgcolor = BG,
+                    content = Text("Переводы / Платежи", size = 40),
+                    margin = margin.only(bottom = 22),
+                ),
+                Container(height = 2, width = 500, bgcolor = FG),
+                Button_Container
+            ]
+        )
     )
 
     #  Главное окно
     Main_Window = Container (
-            Row (
-                controls = [
-                    Account_Window,
-                    Pay_WindoW
-                ]
-            )                 
+        content = Row (
+            controls = [
+                Account_Window,
+                Pay_WindoW,
+            ]
+        )                 
     )
 
     page.add(Main_Window)
