@@ -21,15 +21,6 @@ def main(page: Page):
     page.window_height = window_Height
     page.bgcolor = BG
 
-    def transfer(e):
-        pass
-
-    def transferToAccount(e):
-        pass
-    
-    def pay(e):
-        pass
-
     # Счет для денег
     Cash_Account = Container (
         width = 500,
@@ -87,6 +78,16 @@ def main(page: Page):
             ]
         )        
     )
+
+    # 
+    def transfer(e):
+        page.go("/transfer")
+
+    def transferToAccount(e):
+        page.go("/transferToAccount")
+
+    def pay(e):
+        page.go("/pay")
 
     # Окно с кнопками
     Button_Container = Container (
@@ -188,6 +189,29 @@ def main(page: Page):
             ]
         )                 
     )
+
+
+    def route_change(e):
+        print("Route change:", e.route)
+        page.views.clear()
+        page.views.append(View("/",[page.add(Main_Window)]))
+        if page.route == "/transfer" :
+            page.views.append(View("/transfer", [page.add(Main_Window)]))
+        if page.route == "/transferToAccount":
+            page.views.append(
+                View("/transferToAccount", [page.add(Main_Window)]))
+        if page.route == "/pay":
+            page.views.append(View("/pay", [page.add(Main_Window)]))
+        page.update()
+
+    def view_pop(e):
+        print("View pop:", e.view)
+        page.views.pop()
+        page.go("/")
+
+    page.on_route_change = route_change
+    page.on_view_pop = view_pop
+
 
     page.add(Main_Window)
 

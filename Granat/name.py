@@ -1,51 +1,39 @@
 import flet as ft
 
-#! def main(page):
-#     def btn_click(e):
-#         if not txt_name.value:
-#             txt_name.error_text = "Впишитен свое имя"
-#             page.update()
-#         else:   
-#             name = txt_name.value
-#             page.clean()
-#             page.add(ft.Text(f"Hello, {name}!"))
+def main(page: ft.Page):
+    page.title = "Routes Example"
 
-#     txt_name = ft.TextField(label="Your name")
+    def route_change(route):
+        page.views.clear()
+        page.views.append(
+            ft.View(
+                "/",
+                [
+                    ft.AppBar(title=ft.Text("Flet app"), bgcolor=ft.colors.SURFACE_VARIANT),
+                    ft.ElevatedButton("Visit Store", on_click=lambda _: page.go("/store")),
+                ],
+            )
+        )
+        if page.route == "/store":
+            page.views.append(
+                ft.View(
+                    "/store",
+                    [
+                        ft.AppBar(title=ft.Text("Store"), bgcolor=ft.colors.SURFACE_VARIANT),
+                        ft.ElevatedButton("Go Home", on_click=lambda _: page.go("/")),
+                    ],
+                )
+            )
+        page.update()
 
-#     page.add(txt_name, ft.ElevatedButton("Say hello!", on_click=btn_click))
+    def view_pop(view):
+        page.views.pop()
+        top_view = page.views[-1]
+        page.go(top_view.route)
+
+    page.on_route_change = route_change
+    page.on_view_pop = view_pop
+    page.go(page.route)
 
 
-
-
-#! def main(page):
-#     def checkbox_changed(e):
-#         output_text.value = (
-#             f"You have learned how to ski :  {todo_check.value}."
-#         )
-#         page.update()
-
-#     output_text = ft.Text()
-#     todo_check = ft.Checkbox(label="ToDo: Learn how to use ski", value=False, on_change=checkbox_changed)
-#     page.add(todo_check, output_text)
-
-
-
-
-#! def main(page: ft.Page):
-#     def button_clicked(e):
-#         output_text.value = f"Dropdown value is:  {color_dropdown.value}"
-#         page.update()
-
-#     output_text = ft.Text()
-#     submit_btn = ft.ElevatedButton(text="Submit", on_click=button_clicked)
-#     color_dropdown = ft.Dropdown(
-#         width=100,
-#         options=[
-#             ft.dropdown.Option("Red"),
-#             ft.dropdown.Option("Green"),
-#             ft.dropdown.Option("Blue"),
-#         ],
-#     )
-#     page.add(color_dropdown, submit_btn, output_text)
-
-# ft.app(target=main)
+ft.app(target=main,)
