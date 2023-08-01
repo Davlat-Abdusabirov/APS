@@ -6,8 +6,7 @@ class UserAPS(object):
         self.cards = []
         self.createCard()
         self.avatarImg = avatarImg
-
-    def createCard(self):
-        c = cardAPS.CardAPS()
-        self.cards.append(c)
-
+    
+    def createCard(self, currency = "AniCoin"):
+        self.cards.append(cardAPS.CardAPS(currency))
+        

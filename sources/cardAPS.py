@@ -27,6 +27,8 @@ class CardAPS(object):
             else:
                 self.__money -= take
 
+    def getMoney(self):
+        return self.__money
 
     def printData(self):
         print(self.ID, self.currency, ":", self.__money)

@@ -4,7 +4,7 @@ import userAPS as userAPS
 user = userAPS.UserAPS("Stiven")
 
 # Размеры окна
-window_Width = 1100
+window_Width = 1085
 window_Height = 800
 
 # Цвета
@@ -16,6 +16,7 @@ FG = "#393E46"
 # самые главные контейнеры находятся внизу
 
 def main(page: Page):
+    page.title = "Anime Payment System"
     page.window_width = window_Width
     page.window_height = window_Height
     page.bgcolor = BG
@@ -35,52 +36,58 @@ def main(page: Page):
         height = 250,
         bgcolor = FG,
         border_radius = 10,
-        margin = margin.only(top = 30, bottom = 30)     
+        margin = margin.only(top = 30, bottom = 30),
+        content = Column (
+            controls = [
+                Container ( 
+                    Text("Счет: " + user.cards[0].currency , size = 40),
+                    padding = padding.only(top = 20, left = 50)
+                ),
+                Container ( 
+                    Text(user.cards[0].getMoney() , size = 30),
+                    padding = padding.only(top = 11, left = 100)
+                ),
+                Container ( 
+                    Text("ID: " + user.cards[0].ID , size = 35),
+                    padding = padding.only(top = 16, left = 50)
+                ),
+            ]
+        )   
     )
-    
+
+    # if len(user.cards) > 1:
+    #     currency = user.cards[1].currency
+    #     getMoney = user.cards[1].getMoney()
+    #     id = user.cards[1].ID
+    # else:
+    currency = "*"
+    getMoney = 0.00
+    id = "____ ____ ____"
+
     # Депозит
-    Deposit = Container (
+    Second_Cash_Account = Container (
         width = 500,
         height = 250,  
         bgcolor = FG,
         border_radius = 10,
-        # margin = margin.only(top=30, bottom=30)
-    )
-
-    # Окно с данными о счетах и профиле
-    Account_Window = Container ( 
-        width = 500,
-        bgcolor = BG,
-        margin = margin.only(right = 20),
-        content = Column (
+        content = Column (            
             controls = [
-                # Профиль
-                Row (
-                    controls = [
-                        Container (margin = margin.only(left = 10)),
-                        Image (
-                            width = 100,
-                            height = 100,
-                            opacity = 0.8,
-                            border_radius = 50,
-                            src = user.avatarImg
-                        ),
-                        Container (
-                            Text(user.userName, size = 40),
-                            width = 600,
-                            height = 100,
-                            padding = padding.only(top = 20, left = 10), 
-                        )  
-                    ],
-                ), 
-                Container(height = 2, width = 500, bgcolor = FG),
-                # Даные счетов Cash_Account, Deposit
-                Cash_Account,
-                Deposit
+                Container ( 
+                    Text("Счет: " + currency , size = 40),
+                    padding = padding.only(top = 20, left = 50)
+                ),
+                Container ( 
+                    Text(getMoney , size = 30),
+                    padding = padding.only(top = 11, left = 100)
+                ),
+                Container ( 
+                    Text("ID: " + id, size = 35),
+                    padding = padding.only(top = 16, left = 50)
+                ),
             ]
         )        
     )
-    
+
     # Окно с кнопками
     Button_Container = Container (
         content = Column (
@@ -121,6 +128,40 @@ def main(page: Page):
         )
     )
 
+    # Окно с данными о счетах и профиле
+    Account_Window = Container ( 
+        width = 500,
+        bgcolor = BG,
+        margin = margin.only(right = 20),
+        content = Column (
+            controls = [
+                # Профиль
+                Row (
+                    controls = [
+                        Container (margin = margin.only(left = 10)),
+                        Image (
+                            width = 100,
+                            height = 100,
+                            opacity = 0.8,
+                            border_radius = 50,
+                            src = user.avatarImg
+                        ),
+                        Container (
+                            Text(user.userName, size = 40),
+                            width = 600,
+                            height = 100,
+                            padding = padding.only(top = 20, left = 10), 
+                        )  
+                    ],
+                ), 
+                Container(height = 2, width = 500, bgcolor = FG),
+                # Даные счетов Cash_Account, Deposit
+                Cash_Account,
+                Second_Cash_Account
+            ]
+        )        
+    )
+    
     # Окно платежи/переводы
     Pay_WindoW = Container (
         content = Column (
