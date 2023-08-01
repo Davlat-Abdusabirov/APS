@@ -1,5 +1,5 @@
 from flet import *
-import userAPS
+import userAPS as userAPS
 
 user = userAPS.UserAPS("Stiven")
 

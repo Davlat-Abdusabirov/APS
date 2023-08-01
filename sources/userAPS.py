@@ -1,4 +1,4 @@
-import cardAPS 
+import cardAPS as cardAPS 
 
 class UserAPS(object):
     def __init__(self, userName, avatarImg = "image/standart_user_icon.png"):
