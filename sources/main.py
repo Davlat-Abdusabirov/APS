@@ -206,7 +206,7 @@ def main(page: Page):
 
         if page.route == "/pay":
             page.bgcolor = BG
-            page.views.append(View("/pay", [page.add(Main_Window)]))
+            page.views.append(View("/pay", [Main_Window]))
         page.update()
 
     def view_pop(e):
@@ -216,7 +216,6 @@ def main(page: Page):
 
     page.on_route_change = route_change
     page.on_view_pop = view_pop
-
 
     page.add(Main_Window)
 
