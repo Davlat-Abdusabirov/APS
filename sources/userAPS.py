@@ -1,12 +1,18 @@
 import cardAPS as cardAPS 
 
 class UserAPS(object):
-    def __init__(self, userName, avatarImg = "image/standart_user_icon.png"):
+    def __init__(self, userName, avatarImg = "image/icons-user.png"):
         self.userName = userName
         self.cards = []
+        self.friends = []
         self.createCard()
         self.avatarImg = avatarImg
     
     def createCard(self, currency = "AniCoin"):
         self.cards.append(cardAPS.CardAPS(currency))
+
+    def addFriend(self, friend):
+        self.friends.append(friend)
         
+    def deleteFriend(self, friend):
+        self.friends.remove(friend)
