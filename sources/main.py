@@ -226,7 +226,7 @@ def main(page: Page):
         height = 500
     )
 
-    for i in user.friends:
+    for i in range(10):
         List_View_Clients.controls.append (
             Container (
                 height= 70, 
@@ -234,7 +234,20 @@ def main(page: Page):
                 bgcolor = FG, 
                 border_radius = 3,
                 margin = margin.only(bottom=20),
-                content = Text(i.userName, size = 30)
+                content = Row (
+                    controls = [
+                        Container(margin = margin.only(left = 5)),
+                        Image (
+                            src = user.avatarImg,
+                            width = 60,
+                            height = 60,
+                            opacity = 0.8,
+                            border_radius = 50,
+                        ),
+                        Text(f"User {i+1}", size = 30)
+                        #Text(i.userName, size = 30)
+                    ]
+                )
             )
         )
 
