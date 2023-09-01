@@ -1,7 +1,20 @@
 from flet import *
-import userAPS as userAPS
+import userAPS 
 
 user = userAPS.UserAPS("Stiven")
+
+Myfriend = [
+    userAPS.UserAPS("Mai Sakurajima", "https://i.pinimg.com/736x/81/0a/89/810a89db531396978d7747078c4f0aee.jpg"),
+    userAPS.UserAPS("Tomoe Koga", "https://i.pinimg.com/736x/2f/9d/d7/2f9dd79305c8c23fc20aab005e0495d0.jpg"),
+    userAPS.UserAPS("Rio Futaba", "https://i.pinimg.com/originals/04/40/08/0440088288c1ebc5a6bfb55aa3e79a68.jpg"),
+    userAPS.UserAPS("Kaede Azusagawa", "https://i.pinimg.com/736x/d7/cc/23/d7cc237becea125ec8ee55ead602235b.jpg"),
+    userAPS.UserAPS("Nodoka Toyohama", "https://pbs.twimg.com/profile_images/1129012824649240576/nC46LsJl_400x400.jpg")
+]
+
+
+for i in Myfriend:
+    user.addFriend(i)
+
 
 # Размеры окна
 window_Width = 1105
@@ -21,7 +34,7 @@ def main(page: Page):
     page.window_width = window_Width
     page.window_height = window_Height
     # page.bgcolor = BG
-
+    
     # Счет для денег
     Cash_Account = Container (
         width = 500,
@@ -85,20 +98,25 @@ def main(page: Page):
         page.go("/")
 
     def transfer(e):
-        DropdownCard()
         page.go("/transfer")
 
     def transferToAccount(e):
         page.go("/transferToAccount")
 
     def pay(e):
+        mainWindow(0)
         page.go("/pay")
 
     def TransferPay(e):
+        mainWindow(0)
         page.update()
 
     def AddClient(e):
         page.update()
+
+    def PutTheClient(e):
+        pass
+        
 
     # Окно с кнопками
     Button_Container = Container (
@@ -226,10 +244,11 @@ def main(page: Page):
         height = 500
     )
 
-    for i in range(10):
+    for i in user.friends:
         List_View_Clients.controls.append (
             Container (
-                height= 70, 
+                on_click = PutTheClient(i),
+                height = 70, 
                 width = 500, 
                 bgcolor = FG, 
                 border_radius = 3,
@@ -238,14 +257,13 @@ def main(page: Page):
                     controls = [
                         Container(margin = margin.only(left = 5)),
                         Image (
-                            src = user.avatarImg,
+                            src = i.avatarImg,
                             width = 60,
                             height = 60,
                             opacity = 0.8,
                             border_radius = 50,
                         ),
-                        Text(f"User {i+1}", size = 30)
-                        #Text(i.userName, size = 30)
+                        Text(i.userName, size = 30, color = TEXTCOLOR)
                     ]
                 )
             )
@@ -257,7 +275,7 @@ def main(page: Page):
         content = Column (
             controls = [
                 Container (
-                    Text("Список клиентов", size = 40, color = TEXTCOLOR,),
+                    Text("Список друзей", size = 40, color = TEXTCOLOR,),
                     margin = margin.only(top = 10, left = 20, bottom = 15),
                 ),
                 Container(Stack(controls = [List_View_Clients]), margin= margin.only(left = 20))
@@ -273,10 +291,11 @@ def main(page: Page):
                 print(t2.value)
                 page.update()
 
-    def DropdownCard():
+    def DropdownCard(e):
         for i in range(0, len(user.cards)):
             Dropdown_Card.options.append(dropdown.Option(user.cards[i].currency))
             Dropdown_Card.value = user.cards[i].currency
+
 
     Dropdown_Card = Dropdown (
         border_color = FG,
@@ -289,6 +308,45 @@ def main(page: Page):
     
     t1 = Text("None", size = 30, color = TEXTCOLOR,)
     t2 = Text("None", size = 30, color = TEXTCOLOR,)
+    tf1 = TextField(hint_text = "___ ___ ___", border_color = FG, color = TEXTCOLOR)
+
+    def FrendOrClient(e, friend = None):
+        if e == False:
+            Container (
+                content = Column (
+                    controls = [
+                        Container (
+                            Text("Номер карты", size = 30, color = TEXTCOLOR,),
+                            margin = margin.only(top = 20)
+                        ),
+                        Container (
+                            tf1,
+                            margin = margin.only(top = 15)
+                        )
+                    ]
+                )
+            )
+        else:
+            Container (
+                content = Column (
+                    controls = [
+                        Container (
+                            Text("Перевод другу", size = 30, color = TEXTCOLOR,),
+                            margin = margin.only(top = 20)
+                        ),
+                        Container (
+                            Text(friend.userName, size = 30, color = TEXTCOLOR,),
+                            alignment = alignment.center,
+                            width = 500,
+                            height = 60,
+                            border_radius = 3,
+                            border = FG,
+                            margin = margin.only(top = 15),
+                        )
+                    ]
+                )
+            )
+
 
     Transfer_For_Client = Container (
         height = 733,
@@ -320,12 +378,18 @@ def main(page: Page):
                     )
                 ),
                 Container (
-                    Text("Номер карты", size = 30, color = TEXTCOLOR,),
-                    margin = margin.only(top = 20)
-                ),
-                Container (
-                    TextField(hint_text = "___ ___ ___", border_color = FG, color = TEXTCOLOR),
-                    margin = margin.only(top = 15)
+                    content = Column (
+                        controls = [
+                            Container (
+                                Text("Номер карты", size = 30, color = TEXTCOLOR,),
+                                margin = margin.only(top = 20)
+                            ),
+                            Container (
+                                tf1,
+                                margin = margin.only(top = 15)
+                            )
+                        ]
+                    )
                 ),
                 Container (
                     Text("Сумма перевода", size = 30, color = TEXTCOLOR,),
