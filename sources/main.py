@@ -36,23 +36,23 @@ def main(page: Page):
     # page.bgcolor = BG
     
     # Счет для денег
-    Cash_Account = Container (
+    Cash_Account = Container(
         width = 500,
         height = 250,
         bgcolor = FG,
         border_radius = 3,
         margin = margin.only(top = 30, bottom = 30),
-        content = Column (
+        content = Column(
             controls = [
-                Container ( 
+                Container( 
                     Text("Счет: " + user.cards[0].currency , size = 40, color = TEXTCOLOR,),
                     padding = padding.only(top = 20, left = 50)
                 ),
-                Container ( 
+                Container( 
                     Text(user.cards[0].getMoney() , size = 30, color = TEXTCOLOR,),
                     padding = padding.only(top = 11, left = 100)
                 ),
-                Container ( 
+                Container( 
                     Text("ID: " + user.cards[0].ID , size = 35, color = TEXTCOLOR,),
                     padding = padding.only(top = 16, left = 50)
                 ),
@@ -70,22 +70,22 @@ def main(page: Page):
         id = "____ ____ ____"
 
     # Депозит
-    Second_Cash_Account = Container (
+    Second_Cash_Account = Container(
         width = 500,
         height = 250,  
         bgcolor = FG,
         border_radius = 3,
-        content = Column (            
+        content = Column(            
             controls = [
-                Container ( 
+                Container( 
                     Text("Счет: " + currency , size = 40, color = TEXTCOLOR,),
                     padding = padding.only(top = 20, left = 50)
                 ),
-                Container ( 
+                Container( 
                     Text(getMoney , size = 30, color = TEXTCOLOR,),
                     padding = padding.only(top = 11, left = 100)
                 ),
-                Container ( 
+                Container( 
                     Text("ID: " + id, size = 35, color = TEXTCOLOR,),
                     padding = padding.only(top = 16, left = 50)
                 ),
@@ -119,10 +119,10 @@ def main(page: Page):
         
 
     # Окно с кнопками
-    Button_Container = Container (
-        content = Column (
+    Button_Container = Container(
+        content = Column(
             controls = [
-                Container (
+                Container(
                     content = Text("Перевести на счет", size = 30, color = TEXTCOLOR,),
                     alignment = alignment.center,
                     margin = margin.only(top = 30),
@@ -133,7 +133,7 @@ def main(page: Page):
                     on_click = transfer
                 ),
 
-                Container (
+                Container(
                     content = Text("Перевести между счетами", size = 30, color = TEXTCOLOR,),
                     alignment = alignment.center,
                     margin = margin.only(top = 50),
@@ -144,7 +144,7 @@ def main(page: Page):
                     on_click = transferToAccount
                 ),
 
-                Container (
+                Container(
                     content = Text("Оплатить услуги", size = 30, color = TEXTCOLOR,), 
                     alignment = alignment.center,
                     margin = margin.only(top = 50, bottom = 100),
@@ -159,24 +159,24 @@ def main(page: Page):
     )
 
     # Окно с данными о счетах и профиле
-    Account_Window = Container ( 
+    Account_Window = Container( 
         width = 500,
         bgcolor = BG,
         margin = margin.only(right = 20, left = 20, top = 20),
-        content = Column (
+        content = Column(
             controls = [
                 # Профиль
-                Row (
+                Row(
                     controls = [
-                        Container (margin = margin.only(left = 10)),
-                        Image (
+                        Container(margin = margin.only(left = 10)),
+                        Image(
                             src = user.avatarImg,
                             width = 100,
                             height = 100,
                             opacity = 0.8,
                             border_radius = 50,
                         ),
-                        Container (
+                        Container(
                             Text(user.userName, size = 40, color = TEXTCOLOR,),
                             width = 600,
                             height = 100,
@@ -193,10 +193,10 @@ def main(page: Page):
     )
     
     # Окно платежи/переводы
-    Pay_WindoW = Container (
-        content = Column (
+    Pay_WindoW = Containers(
+        content = Column(
             controls = [
-                Container (
+                Container(
                     alignment = alignment.center,
                     width = 500, 
                     bgcolor = BG,
@@ -210,10 +210,10 @@ def main(page: Page):
     )
 
     #  Главное окно
-    Main_Window = Container (
+    Main_Window = Container(
         height = 733,
         bgcolor= BG,
-        content = Row (
+        content = Row(
             controls = [
                 Account_Window,
                 Pay_WindoW,
@@ -221,16 +221,16 @@ def main(page: Page):
         )                 
     )
 
-    Transfer_Header = Container (
+    Transfer_Header = Container(
         bgcolor = BG,
-        content = Row (
+        content = Row(
             controls = [
-                Container (
+                Container(
                     Text("<", size = 60, color = TEXTCOLOR,),
                     margin = margin.only(left = 20),
                     on_click = mainWindow
                 ),
-                Container (
+                Container(
                     Text("Перевести клиенту", size = 30, color = TEXTCOLOR,),
                     padding = padding.only(top = 10, left = 20)
                 )
@@ -239,24 +239,24 @@ def main(page: Page):
     )
 
     
-    List_View_Clients = Column (
+    List_View_Clients = Column(
         scroll = "auto",
         height = 500
     )
 
     for i in user.friends:
-        List_View_Clients.controls.append (
-            Container (
+        List_View_Clients.controls.append(
+            Container(
                 on_click = PutTheClient(i),
                 height = 70, 
                 width = 500, 
                 bgcolor = FG, 
                 border_radius = 3,
                 margin = margin.only(bottom=20),
-                content = Row (
+                content = Row(
                     controls = [
                         Container(margin = margin.only(left = 5)),
-                        Image (
+                        Image(
                             src = i.avatarImg,
                             width = 60,
                             height = 60,
@@ -269,12 +269,12 @@ def main(page: Page):
             )
         )
 
-    List_Of_Clients = Container (
+    List_Of_Clients = Container(
         width = 550,
         height = 733,
-        content = Column (
+        content = Column(
             controls = [
-                Container (
+                Container(
                     Text("Список друзей", size = 40, color = TEXTCOLOR,),
                     margin = margin.only(top = 10, left = 20, bottom = 15),
                 ),
@@ -297,7 +297,7 @@ def main(page: Page):
             Dropdown_Card.value = user.cards[i].currency
 
 
-    Dropdown_Card = Dropdown (
+    Dropdown_Card = Dropdown(
         border_color = FG,
         bgcolor = BG,
         color = TEXTCOLOR,
@@ -312,14 +312,14 @@ def main(page: Page):
 
     def FrendOrClient(e, friend = None):
         if e == False:
-            Container (
-                content = Column (
+            Container(
+                content = Column(
                     controls = [
-                        Container (
+                        Container(
                             Text("Номер карты", size = 30, color = TEXTCOLOR,),
                             margin = margin.only(top = 20)
                         ),
-                        Container (
+                        Container(
                             tf1,
                             margin = margin.only(top = 15)
                         )
@@ -327,14 +327,14 @@ def main(page: Page):
                 )
             )
         else:
-            Container (
-                content = Column (
+            Container(
+                content = Column(
                     controls = [
-                        Container (
+                        Container(
                             Text("Перевод другу", size = 30, color = TEXTCOLOR,),
                             margin = margin.only(top = 20)
                         ),
-                        Container (
+                        Container(
                             Text(friend.userName, size = 30, color = TEXTCOLOR,),
                             alignment = alignment.center,
                             width = 500,
@@ -348,13 +348,13 @@ def main(page: Page):
             )
 
 
-    Transfer_For_Client = Container (
+    Transfer_For_Client = Container(
         height = 733,
         width = 500,
-        content = Column (
+        content = Column(
             controls = [
-                Container (
-                    content = Row (
+                Container(
+                    content = Row(
                         controls = [
                             Text("Карта", size = 40, color = TEXTCOLOR,),
                             Dropdown_Card
@@ -362,13 +362,13 @@ def main(page: Page):
                     ),
                     margin = margin.only(top = 10)
                 ),
-                Container (
+                Container(
                     bgcolor = FG,
                     width = 500,
                     height = 60,
                     border_radius = 3,
                     margin = margin.only(top = 15),
-                    content = Row (
+                    content = Row(
                         controls = [
                             Container(margin = margin.only(left = 10)),
                             t1,
@@ -377,31 +377,31 @@ def main(page: Page):
                         ]
                     )
                 ),
-                Container (
-                    content = Column (
+                Container(
+                    content = Column(
                         controls = [
-                            Container (
+                            Container(
                                 Text("Номер карты", size = 30, color = TEXTCOLOR,),
                                 margin = margin.only(top = 20)
                             ),
-                            Container (
+                            Container(
                                 tf1,
                                 margin = margin.only(top = 15)
                             )
                         ]
                     )
                 ),
-                Container (
+                Container(
                     Text("Сумма перевода", size = 30, color = TEXTCOLOR,),
                     margin = margin.only(top = 20,)
                 ),
-                Container (
+                Container(
                     TextField(hint_text = "0.0", border_color = FG, color = TEXTCOLOR),
                     margin = margin.only(top = 15)
                 ),
-                Row (
+                Row(
                     controls = [
-                        Container (
+                        Container(
                             Text("Отправить", size = 30, color = TEXTCOLOR,),
                             alignment = alignment.center,
                             bgcolor = FG,
@@ -411,7 +411,7 @@ def main(page: Page):
                             margin = margin.only(top = 25),
                             on_click = TransferPay
                         ),
-                        Container (
+                        Container(
                             Container(Text("+", size = 30, color = TEXTCOLOR), padding = padding.only(top = 5, left = 20)),
                             bgcolor = FG,
                             width = 60,
@@ -426,17 +426,17 @@ def main(page: Page):
         )
     )
 
-    Transfer_Menu = Row (
+    Transfer_Menu = Row(
         controls = [
             List_Of_Clients,
             Transfer_For_Client
         ]
     )
 
-    Transfer_Window = Container (
+    Transfer_Window = Container(
         height = 733,
         bgcolor = BG,
-        content = Column (
+        content = Column(
             controls = [
                 Transfer_Header,
                 Container(height = 2, width = window_Width, bgcolor = FG),
